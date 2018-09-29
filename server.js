@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.get('/search/:term', (req, res) =>{
-    console.log(req.params.term);
-    const apiUrl = `http://www.omdbapi.com/?s=Batman&apikey=${process.env.OMDB_API_KEY}&`;
+    let terms = req.params.term;
+    const apiUrl = `http://www.omdbapi.com/?s=${terms}&apikey=${process.env.OMDB_API_KEY}&`;
     apiClient({ method: "get", url: apiUrl}).then(apiRes => {
         res.send(`<img src=${apiRes.data.Search[0].Poster}>`)
     })
