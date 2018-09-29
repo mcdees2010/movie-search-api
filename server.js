@@ -16,10 +16,15 @@ app.get('/search/:term', (req, res) =>{
     let terms = req.params.term;
     const apiUrl = `http://www.omdbapi.com/?s=${terms}&apikey=${process.env.OMDB_API_KEY}&`;
     apiClient({ method: "get", url: apiUrl}).then(apiRes => {
-        res.send(`<img src=${apiRes.data.Search[0].Poster}>`)
+        let posters = '';
+        for(var i = 0; i < apiRes.data.Search.length; i++){
+            const images = apiRes.data.Search[i].Poster;
+            posters = posters + `<img src=${images}>`;
+        }
+        res.send(posters);
     })
 })
 
 app.listen(process.env.PORT, err => {
-    console.log(`running on port ${process.env.PORT}.....`);
+    console.log(err || `running on port ${process.env.PORT}.....`);
 })
