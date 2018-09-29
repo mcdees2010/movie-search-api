@@ -14,10 +14,10 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/search/:term', (req, res) =>{
     console.log(req.params.term);
-    // const apiUrl = `http://www.omdbapi.com/search/term?apikey=${process.env.OMDB_API_KEY}&`;
-    // apiClient({ method: "get", url: apiUrl}).then(apiRes => {
-    //     console.log(apiRes);
-    // })
+    const apiUrl = `http://www.omdbapi.com/?s=Batman&apikey=${process.env.OMDB_API_KEY}&`;
+    apiClient({ method: "get", url: apiUrl}).then(apiRes => {
+        res.send(`<img src=${apiRes.data.Search[0].Poster}>`)
+    })
 })
 
 app.listen(process.env.PORT, err => {
